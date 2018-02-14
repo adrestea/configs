@@ -1064,7 +1064,7 @@ au BufRead,BufNewFile,BufEnter * cd %:p:h
 " :nmap ,v :e ~/.vimrc
 nmap ,ev :tabedit ~/.vimrc
 nmap ,ez :tabedit ~/.zshrc
-:nmap ,ebl :tabedit ~/.bash_lin
+:nmap ,ebl :tabedit ~/.bashrc_lin
 nmap te :tabedit
 
 "let mapleader = "\<Space>"

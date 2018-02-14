@@ -99,7 +99,7 @@ echo(link) -> {{
 }}
 map <C-f> createScriptHint(echo)
 
-let configpath = '/home/archermind/.cvimrc'
+let configpath = '~/.cvimrc_lin'
 set localconfig " Update settings via a local file (and the `:source` command) rather
                 " than the default options page in chrome
 " As long as localconfig is set in the .cvimrc file. cVim will continue to read

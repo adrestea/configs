@@ -37,6 +37,8 @@ alias cd7='cd ..'/../../../../../..
 alias cd8='cd ..'/../../../../../../..
 
 alias gvim='gvim --remote-tab-silent'
+alias rm='mv -t ~/.local/share/Trash/files --backup=t'
+alias egrep='egrep -i'
 
 #alias dds='adb logcat -c && mm -B && adb install -r ../../../out/debug/target/product/FJDEV046/system/app/Imadoco/Imadoco.apk && sleep 2 && echo "" > ~/tmp/aabbccddeeff.log  && logcatps jp.co.nttdocomo.lcsapp | tee ~/tmp/aabbccddeeff.log'
 #alias master='adb logcat -c && adb root && mm -B && adb remount && adb push /home/user/freedisk/FREE_GAO/.code_link/Monaka-Master/LINUX/android/out/debug/target/product/FJDEV051/system/priv-app/DcmLocation/DcmLocation.apk  /system/priv-app/DcmLocation/DcmLocation.apk  && sleep 20 && echo "" > ~/tmp/aabbccddeeff.log  && logcatps jp.co.nttdocomo.lcsapp | tee ~/tmp/aabbccddeeff.log'
@@ -49,6 +51,7 @@ alias gvim='gvim --remote-tab-silent'
 #alias ip_houjun='echo "192.168.81.160"'
 
 #alias tcl_svn='cd /home/user/freedisk/FREE_GAO/thundersoft/workspace/svn/tcl_dep_app'
+
 
 function enable_touchpad
 {
@@ -343,16 +346,16 @@ function andtd
     ant tdebug
 }
 
-function cll
-{
-	arg=40
-    if [ $# == 1 ];	then
-		arg=$1
-	fi
-	for((i=0; i<$arg;i++));
-		do echo
-	done
-}
+#function cll
+#{
+#	arg=40
+#	if [ $# == 1 ];	then
+#		arg=$1
+#	fi
+#	for ((i=0; i<$arg;i++));
+#		do echo
+#	done
+#}
 
 function flashBoot
 {
