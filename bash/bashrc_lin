@@ -1,0 +1,633 @@
+export ANDROID_HOME=/work/android-sdk-linux/
+export PATH=~/bin/:$PATH
+#export PATH=$PATH:/home/user/.Integrity/IntegrityClient10/bin               
+
+export JAVA_HOME=/opt/java/lastest
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
+                                                                                                                               
+alias lt='ls -lt '
+alias cl='clear'
+alias lrt='ls -lrt '
+alias aapts='aapt list -v -a '
+alias c='xclip'
+alias gr='grep -nHir '
+alias bb='adb shell busybox '
+alias ld='ls -lrtX | grep -E ^d'
+alias lf='ls -lrt | grep -E ^-'
+#alias m='touch * && mm -B| grep "Install" && date'
+alias dd='date +%m%d20%y_%H%M%S'
+alias logcat_no='adb logcat -v threadtime -b all'
+alias logcatb='adb logcat -v time -b events -b main'
+alias logcatRuntime='adb logcat -v time|grep AndroidRuntime'
+alias adbpm='adb shell pm list package'
+alias adbReinit='adb shell am broadcast -a android.intent.action.MASTER_CLEAR'
+alias adbSetting='adb shell am start -n com.android.settings/.Settings'
+alias anttdebug='ant tdebug'
+alias anttreleasesigned='ant treleasesigned | grep -E ".apk$"'
+alias toSVN='cd /home/user/freedisk/FREE_GAO/thundersoft/workspace/svn/tcl_dep_app'
+alias routeDefault='route add default gw 164.69.138.5'
+alias cd1='cd ..'
+alias cd2='cd ../..'
+alias cd3='cd ..'/../..
+alias cd4='cd ..'/../../..
+alias cd5='cd ..'/../../../..
+alias cd6='cd ..'/../../../../..
+alias cd7='cd ..'/../../../../../..
+alias cd8='cd ..'/../../../../../../..
+
+alias gvim='gvim --remote-tab-silent'
+
+#alias dds='adb logcat -c && mm -B && adb install -r ../../../out/debug/target/product/FJDEV046/system/app/Imadoco/Imadoco.apk && sleep 2 && echo "" > ~/tmp/aabbccddeeff.log  && logcatps jp.co.nttdocomo.lcsapp | tee ~/tmp/aabbccddeeff.log'
+#alias master='adb logcat -c && adb root && mm -B && adb remount && adb push /home/user/freedisk/FREE_GAO/.code_link/Monaka-Master/LINUX/android/out/debug/target/product/FJDEV051/system/priv-app/DcmLocation/DcmLocation.apk  /system/priv-app/DcmLocation/DcmLocation.apk  && sleep 20 && echo "" > ~/tmp/aabbccddeeff.log  && logcatps jp.co.nttdocomo.lcsapp | tee ~/tmp/aabbccddeeff.log'
+#alias ddsD='adb logcat -c && mm -B && adb install -r ../../../../out/debug/target/product/FJDEV051/system/priv-app/DcmLocation/DcmLocation.apk && sleep 2 && echo "" > ~/tmp/aabbccddeeff.log && logcatps jp.co.nttdocomo.lcsapp | tee ~/tmp/aabbccddeeff.log'
+#alias ip_yazhi='echo "172.26.46.85"'
+#alias ip_wangbo='echo "172.26.46.71"'
+#alias ip_nenghai='echo "172.26.46.38"'
+#alias ip_idol347='echo "172.26.46.119"'
+#alias ip_taijuan='echo "172.26.46.68"'
+#alias ip_houjun='echo "192.168.81.160"'
+
+#alias tcl_svn='cd /home/user/freedisk/FREE_GAO/thundersoft/workspace/svn/tcl_dep_app'
+
+function enable_touchpad
+{
+    sudo modprobe psmouse
+}
+
+function disable_touchpad
+{
+    sudo rmmod psmouse
+}
+
+function mls
+{
+    mlocate -ib $1 |grep -i `pwd`| grep --color -iE $1
+}
+
+function commit_statistics
+{
+    echo '''根据
+           3 files changed, 1 insertions(+), 11 deletions(-)计算
+        '''
+    git log --author="$1" --stat | grep -iE "insertions" | gawk '{ insertions += $4 ; deletions += $6 } END { printf "%s insertions(+), %s deletions(-)\n", insertions, deletions }' -
+}
+function logcatAll
+{
+    while true
+    do
+		if [ "$1" = "" ]; then
+			file_name=`dd`
+		else
+			file_name=`dd`_"$1"
+		fi
+        adb logcat -v threadtime -b all| tee $file_name
+		sleep 1
+    done
+}
+
+function logcat
+{
+    while true
+    do
+		if [ "$1" = "" ]; then
+			file_name=`dd`
+		else
+			file_name=`dd`_"$1"
+		fi
+		echo $file_name
+        adb logcat -v threadtime | tee $file_name
+#adb logcat -v threadtime -b all | tee $file_name
+		sleep 1
+    done  
+}
+
+function adbLogGrep
+{
+    while true
+    do
+        adb logcat -v time -b all | grep -iE "$1"
+        sleep 1
+    done  
+}
+
+function adbPush
+{
+  adb root
+  sleep 1
+  adb remount
+  old_path=`pwd`
+  croot
+  croot_path=`pwd`
+  full_path=$croot_path"/"$1  
+  cd $old_path
+  path="/"`echo $1 |cut -d "/" -f 6-`
+  echo "adb push $full_path $path"
+  adb push $full_path $path
+}
+
+function adbPull
+{
+  old_path=`pwd`
+  croot_path=`croot && pwd`
+  full_path=$croot_path"/"$1  
+  path="/"`echo $1 |cut -d "/" -f 5-`
+  echo "adb pull $path"
+  adb pull $path
+}
+
+function t2
+{
+    cd `pwd |cut -d "/" -f  -5`
+}
+
+function ml
+{
+    mlocate -ib "$1" |grep -iE `pwd`
+}
+
+function ma
+{
+    assddsss=`pwd`
+}
+function ma1
+{
+    assddsss1=`pwd`
+}
+function ma2
+{
+    assddsss2=`pwd`
+}
+function ma3
+{
+    assddsss3=`pwd`
+}
+function ma4
+{
+    assddsss4=`pwd`
+}
+function ma5
+{
+    assddsss5=`pwd`
+}
+function ma6
+{
+    assddsss6=`pwd`
+}
+function ma7
+{
+    assddsss7=`pwd`
+}
+function ma8
+{
+    assddsss8=`pwd`
+}
+function ma9
+{
+    assddsss9=`pwd`
+}
+function ma10
+{
+    assddsss10=`pwd`
+}
+darts_project_diretory="/media/New_Disk/Project/code/Darts-nosv-master/LINUX/android"
+function ecd_dartds
+{
+    cd $darts_project_diretory
+}
+squid_project_diretory="/media/New_Disk/Project/code/squid-n/LINUX/android"
+function ecd_squid
+{
+    cd $squid_project_diretory
+}
+latte_project_diretory="/media/New_Disk/Project/code/Latte-nosv-master/LINUX/android"
+function ecd_latte
+{
+    cd $latte_project_diretory
+}
+golf_project_diretory="/media/New_Disk/Project/code/Golf-nosv-master/LA.UM.5.6/LINUX/android/"
+function ecd_golf
+{
+    cd $golf_project_diretory
+}
+function cda
+{
+    cd $assddsss
+}
+function cda1
+{
+    cd $assddsss1
+}
+function cda2
+{
+    cd $assddsss2
+}
+function cda3
+{
+    cd $assddsss3
+}
+function cda4
+{
+    cd $assddsss4
+}
+function cda5
+{
+    cd $assddsss5
+}
+function cda6
+{
+    cd $assddsss6
+}
+function cda7
+{
+    cd $assddsss7
+}
+function cda8
+{
+    cd $assddsss8
+}
+function cda9
+{
+    cd $assddsss9
+}
+function cda10
+{
+    cd $assddsss10
+}
+
+function lsa
+{
+    echo a  : $assddsss
+    echo a1 : $assddsss1
+    echo a2 : $assddsss2
+    echo a3 : $assddsss3
+    echo a4 : $assddsss4
+    echo a5 : $assddsss5
+    echo a6 : $assddsss6
+    echo a7 : $assddsss7
+    echo a8 : $assddsss8
+    echo a9 : $assddsss9
+    echo a10: $assddsss10
+}
+
+function reviewer
+{
+    echo "==========================>
+[Review +1 Checklist]:
+understanding for bug from bug owner and reviewer are matched[OK]
+bug owner gives explanation for root case & solution F2F[OK]
+test cases are enough[OK]
+bug owner shows all test cases on phone[OK]
+SDM is NOT duplicated[OK]
+other related code is submitted[OK]
+
+==========================>
+"
+}
+
+function services
+{
+    croot
+    mmm frameworks/base/services/    
+}
+
+function flashBoot
+{
+    adb reboot-bootloader
+    fastboot flash boot boot.img
+    fastboot flash system system.img
+    fastboot flash userdata userdata.img
+    fastboot flash custpack custpack.img
+    fastboot reboot
+}
+
+function flash-all
+{
+    fastboot flash boot boot.img
+    fastboot flash system system.img
+    fastboot flash userdata userdata.img
+    fastboot flash custpack custpack.img
+}
+
+function vp
+{
+    gvim -p `find -type f | grep -ivE "tar.gz$|.7z$|.rar$"`
+}
+
+function adbRoot
+{
+    adb root
+    adb shell mount -o remount /custpack
+    if [ "$1" = "" ]; then 
+        sleep 1
+    else
+        sleep $1
+    fi
+    adb root
+    adb remount 
+    adb shell mount -o remount /custpack
+}
+
+function adbPath
+{
+    echo `adb shell pm path "$1" | cut -f 2 -d ":"`
+}
+
+function andUpdatea
+{
+    android update project -p . -t android-17 --name JrdFileManager
+}
+
+function andtd
+{
+    ant tdebug
+}
+
+function cll
+{
+	arg=40
+    if [ $# == 1 ];	then
+		arg=$1
+	fi
+	for((i=0; i<$arg;i++));
+		do echo
+	done
+}
+
+function flashBoot
+{
+    adb reboot-bootloader
+    fastboot flash boot boot.img
+    fastboot flash system system.img
+    fastboot flash userdata userdata.img
+    fastboot flash custpack custpack.img
+    fastboot reboot
+}
+function findKeyWordIn
+{
+    find . -type f -iname "*\.$1" -print0 | xargs -0 grep --color -niE "$2"
+    #find . -type f -name "*\.$1" -print0 | xargs -0 grep --color -n "$2";
+}
+
+function adbScreenCap
+{
+    #adb shell screencap -p | sed 's/\r$//' > $1
+    adb shell screencap -p > $1
+}
+
+function adbScreenrecord
+{
+    adb shell screenrecord --time-limit 100 sdcard/$1.mp4
+}
+
+function adbMount
+{
+    adb root && sleep 2 && adb remount && adb shell mount -o remount /custpack
+}
+
+function adbPs
+{
+    echo `adb shell ps |grep -i "$1" | sed '/ \+/s// /g' | cut -f 2 -d ' '`
+}
+
+function gitPushkk8926_cmcc
+{
+    echo "git push ssh://jianlin.gao@172.16.11.162:29418/$1 HEAD:refs/for/kk8926_cmcc"
+    git push ssh://jianlin.gao@172.16.11.162:29418/$1 HEAD:refs/for/kk8926_cmcc
+}
+
+function ssh_fujitsu_app
+{
+    ssh fujitsu-app@164.69.136.136
+}
+
+function ssh_zhoulin
+{
+    ssh ts@164.69.136.167
+}
+
+function ssh_wangpz
+{
+    ssh wang@164.69.136.137
+}
+
+function meldEx
+{
+    meld $1$3 $2$3
+}
+
+function tokk8926_cmcc
+{
+#    cd /home/user/.link/kk8926_cmcc/
+    cd /home/user/code/kk8926_cmcc/
+}
+
+function toPush()
+{
+  cd /home/user/code/tools/push_m812/
+}
+
+function toFileManager
+{
+  cd vendor/tct/source/apps/FileManager/
+}
+
+function adbins
+{
+  if [ -f "$1" ]; then
+	adb install -r "$1"
+  elif [ -f ../"$1" ]; then
+	adb install -r ../"$1"
+  elif [ -f ../../"$1" ]; then
+	adb install -r ../../"$1"
+  elif [ -f ../../../"$1" ]; then
+	adb install -r ../../../"$1"
+  elif [ -f ../../../../"$1" ]; then
+	adb install -r ../../../../"$1"
+  elif [ -f ../../../../../"$1" ]; then
+	adb install -r ../../../../../"$1"
+  elif [ -f ../../../../../../"$1" ]; then
+	adb install -r ../../../../../../"$1"
+  fi
+}
+
+function adbdump
+{
+    if [ "$1" = "" ]; then
+        adb shell dumpsys activity activities |grep "Running activities (most recent first):" -A9 -B1
+    elif [ "$1" = "a" ]; then
+#       adb shell dumpsys activity activities | grep -E "* Recent #0:" | head -n 1| awk -F '[= ]' '{print $9}'
+#       adb shell dumpsys activity activities| grep -iE "Running activities \(most recent first\)" -A1 | grep -iE "TaskRecord"| head -n 1 | awk -F '[= ]' '{print $10}'
+#       adb shell dumpsys activity activities | grep --color=auto -iE "Running activities \(most recent first\)" -A1 | grep --color=auto -iE "TaskRecord" | tail -n -1 | awk -F '[= ]' '{print $10}';
+        adb shell dumpsys activity activities | grep --color=auto -iE "mFocusedActivity:" | grep --color=auto -iE "mFocusedActivity:" | tail -n -1 | awk -F ' ' '{print $4}'| awk -F '/' '{print $1}';
+    else
+        adb shell pm -l |grep -iE $1 |awk -F ':' '{print $2}'
+    fi
+}
+
+function xgrep()
+{
+echo "Format: xgrep \"*.java\" a "
+if [ "$2" = "" ]; then
+if [ "$1" = "" ]; then
+   echo "no parameter."
+   return;
+else
+   echo "no type of file filter, keyword $1."
+   grep --color -n "$1"
+fi
+else
+#   echo "find . -type f -name "*\.$1" -print0 | xargs -0 grep --color -n "$2""     
+   echo "find . -type f -name "$1" -print0 | xargs -0 grep --color -n "$2""     
+   echo "filter type .$1, keyword $2."
+   find . -type f -name "$1" -print0 | xargs -0 grep --color -ni "$2"
+fi
+}
+
+function sogou_restar() 
+{
+    pidof fcitx | xargs kill
+    pidof sogou-qimpanel | xargs kill
+    nohup fcitx  1>/dev/null 2>/dev/null &
+    nohup sogou-qimpanel  1>/dev/null 2>/dev/null &
+}
+
+function duplicate()
+{
+find -not -empty -type f -printf "%s\n" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate
+}
+
+function logcatps()
+{
+#    if [ ! -n "$2" ] ;then  
+#        echo "you have not input a word!"  
+#    else  
+#        echo "the word you input is $1"  
+#    fi
+    echo $@
+    index=2
+#   if [ -n "$2" ] ; then 
+    if [ $2 ] ; then
+        index="$2"
+    fi
+    echo $index
+    app_ps=`adb shell ps | grep $1`
+    echo $app_ps
+    ps_id=`echo $app_ps | cut -d " " -f $index`
+    echo "$ps_id"\)
+    echo "==========================begin to output=========================="
+    adb logcat -v time -b all| grep "$ps_id"\)
+}
+
+log2file="~/tmp/aabbccddeeff.log"
+
+function switchGit()
+{
+echo "=============================="
+    git config --global -l
+echo "=============================="
+echo "    Switch the Git Config:"
+echo 
+echo "        1.jianlin.gao"
+echo "        2.qiang.liang"
+echo "        3.yunqiang.zhang"
+echo "        4.qiang.li"
+echo "        5.lin.peng"
+echo "=============================="
+
+DEFAULT_NUM=1
+while [ TRUE ]
+do
+    echo -n "Which would you choose? ["$DEFAULT_NUM"]"
+    read ANSWER
+
+    case $ANSWER in
+    ""|1)
+	git config --global user.name jianlin.gao
+	git config --global user.email jianlin.gao@jrdcom.com
+        break
+        ;;
+    2)
+	git config --global user.name qing.liang
+        git config --global user.email qing.liang@jrdcom.com
+	break
+        ;;
+    3)
+	git config --global user.name yunqiang.zhang
+        git config --global user.email yunqiang.zhang@jrdcom.com
+	break
+	    ;;
+    4)
+	git config --global user.name qiang.li
+        git config --global user.email qiang.li@jrdcom.com
+	break
+	    ;;
+    5)
+	git config --global user.name lin.peng
+        git config --global user.email lin.peng@jrdcom.com
+	break
+	    ;;
+    *)
+	echo
+        echo "I didn't understand your response.  Please try again."
+        echo
+        ;;
+    esac
+    if [ -n "$1" ] ; then
+	break
+    fi
+
+#        if [ -z "$ANSWER" ] ; then
+#	    NAME="jianlin.gao"
+#	    git config --global user.name jianlin.gao
+#	    git config --global user.email jianlin.gao@jrdcom.com
+#        elif (echo -n $ANSWER | grep -q -e "^1*$") ; then
+#	    NAME="jianlin.gao"
+#	    git config --global user.name jianlin.gao
+#	    git config --global user.email jianlin.gao@jrdcom.com
+#        elif (echo -n $ANSWER | grep -q -e "^2*$") ; then
+#	    NAME="yunqiang.zhang"
+#	    git config --global user.name yunqiang.zhang
+#	    git config --global user.email yunqiang.zhang@jrdcom.com
+#	fi
+#	if [ -n "$NAME" ] ; then
+#	    break
+#	fi
+    done
+    git config --global -l
+echo "=============================="
+}
+
+function makelink(){
+    while getopts "ha:bc" arg #选项后面的冒号表示该选项需要参数
+    do
+        case $arg in
+            h)
+                echo '-p: golf / latte'
+                ;;
+            a)
+                echo "a's arg:$OPTARG" #参数存在$OPTARG中
+#                if [ $OPTARG -eq "golf" ] ; then
+#                    echo "golf"
+#                fi            
+                ;;
+            b)
+                echo "b"
+                ;;
+            c)
+                echo "c"
+                ;;
+            ?)  #当有不认识的选项的时候arg为?
+                echo "unkonw argument"
+#            exit 1
+            ;;
+        esac
+    done
+}
+function data_formatted(){
+  echo `date +%Y%m%d%H%M%S `
+}
+function adbDumpsysActivity(){
+    echo "====================================="
+    adb shell dumpsys activity activities| egrep "\* |Task id #" |col -b
+}
